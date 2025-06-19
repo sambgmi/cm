@@ -1,3 +1,4 @@
+
 # Flask Template
 
 This sample repo contains the recommended structure for a Python Flask project. In this sample, we use `flask` to build a web application and the `pytest` to run tests.
