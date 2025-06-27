@@ -1,33 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Photographers - SnapClick</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <title>Photographers – CaptureMoments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <style>
+    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+    .navbar {
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
+      background: rgba(255,255,255,0.75) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.07);
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    .navbar-brand {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .nav-link.active, .nav-link.fw-bold {
+      color: #0d6efd !important;
+    }
+    .photographer-card {
+      border: none;
+      border-radius: 18px;
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.10);
+      background: #fff;
+      transition: transform 0.23s, box-shadow 0.23s;
+      overflow: hidden;
+      margin-bottom: 2.3rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .photographer-card:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(52, 71, 103, 0.14);
+    }
+    .photographer-img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 17px 17px 0 0;
+      background: #e3e6ea;
+      display: block;
+    }
+    .img-placeholder {
+      background: #e3e6ea;
+      height: 230px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7a7a7a;
+      font-size: 1rem;
+      border-radius: 17px 17px 0 0;
+      width: 100%;
+    }
+    .photographer-info {
+      padding: 1.2rem 1rem 1rem 1rem;
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+    .photographer-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+    .photographer-specialty {
+      color: #0d6efd;
+      font-size: 1.02rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .photographer-location {
+      color: #737373;
+      font-size: 0.98rem;
+      margin-bottom: 0.6rem;
+    }
+    .btn-book {
+      padding: 0.5rem 1.3rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-top: 0.6rem;
+    }
+    @media (max-width: 991px) {
+      .photographer-img, .img-placeholder { height: 170px; }
+    }
+    @media (max-width: 576px) {
+      .photographer-img, .img-placeholder { height: 120px; }
+      .photographer-info { padding: 0.8rem 0.4rem 0.7rem 0.4rem; }
+    }
+  </style>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container py-5">
-  <h2 class="text-center mb-4">Our Photographers</h2>
-  <div class="row g-4">
-    {% for photographer in photographers %}
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <img src="{{ photographer.image }}" class="card-img-top" alt="{{ photographer.name }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ photographer.name }}</h5>
-            <p class="text-muted">{{ photographer.specialty }}</p>
-            <p class="card-text">{{ photographer.bio }}</p>
-            <a href="{{ url_for('book_photographer', photographer_id=photographer.id) }}" class="btn btn-primary mt-2">
-  View Availability
-</a>
-          </div>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">CaptureMoments</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav ms-auto gap-3">
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{{ url_for('photographers') }}">Photographers</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}#testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+        {% if not session.get('user_id') %}
+        <li class="nav-item"><a class="nav-link fw-bold" href="{{ url_for('signup') }}">Signup</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+        {% else %}
+        <li class="nav-item"><span class="nav-link disabled">Hello, {{ session['username'] }}</span></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="container" style="margin-top: 130px;">
+  <div class="row">
+    {% for p in photographers %}
+    <div class="col-lg-4 col-md-6 mb-4 d-flex">
+      <div class="photographer-card w-100">
+        {% if p.image %}
+          <img src="{{ p.image }}" alt="{{ p.name }}" class="photographer-img" loading="lazy"
+             onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'img-placeholder\'>No Image</div>';">
+        {% else %}
+          <div class="img-placeholder">No Image</div>
+        {% endif %}
+        <div class="photographer-info">
+          <div class="photographer-name">{{ p.name }}</div>
+          <div class="photographer-specialty">{{ p.specialty }}</div>
+          {% if p.location %}
+          <div class="photographer-location"><i class="bi bi-geo-alt-fill"></i> {{ p.location }}</div>
+          {% endif %}
+          <a href="/book/{{ p._id }}" class="btn btn-primary btn-book"
+             {% if not session.get('user_id') %}onclick="askLogin(event)"{% endif %}>
+            Book Now
+          </a>
         </div>
       </div>
+    </div>
+    {% else %}
+    <div class="text-center text-muted my-5">
+      <h5>No photographers found.</h5>
+    </div>
     {% endfor %}
   </div>
-</div>
+</section>
 
+<footer class="footer text-center mt-5">
+  <div class="container">
+    <p class="mb-1">&copy; 2025 CaptureMoments. All rights reserved.</p>
+    <small>Bringing your memories to life with passion.</small>
+  </div>
+</footer>
+
+<script>
+function askLogin(event) {
+  event.preventDefault();
+  if (window.confirm("You need to login to book a photographer. Do you want to go to the login page?")) {
+    window.location.href = "{{ url_for('login') }}";
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

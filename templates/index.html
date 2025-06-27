@@ -1,153 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SnapClick - Capture Life’s Best Moments</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <title>capturemoments – Capture Life’s Best Moments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
-    .hero {
-     background: url('https://picsum.photos/id/1005/1600/900') center center/cover no-repeat;
-
-      height: 100vh;
-      position: relative;
-      color: white;
+    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+    /* Navbar Blur */
+    .navbar {
+      padding-top: 0.7rem;
+      padding-bottom: 0.7rem;
+      background: rgba(255,255,255,0.75) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.07);
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+    .navbar-brand {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .nav-link.active, .nav-link.fw-bold {
+      color: #0d6efd !important;
     }
 
-    .hero-overlay {
-      background-color: rgba(0, 0, 0, 0.6);
-      height: 100%;
-      width: 100%;
+    /* Hero section animation */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      padding: 0 15px;
+      justify-content: center;
       text-align: center;
     }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: bold;
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(0deg, rgba(0,0,0,0.64), rgba(0,0,0,0.64));
+      pointer-events: none;
+      opacity: 0;
+      animation: bgFadeIn 2s forwards;
+      animation-delay: 0.3s;
     }
-
-    .nav-link {
-      color: white !important;
-      font-weight: 500;
+    .hero-bg-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.9);
+      opacity: 0;
+      animation: imgFadeIn 1.4s forwards;
     }
-
-    .btn-outline-light:hover {
-      background-color: white;
-      color: black;
+    @keyframes imgFadeIn {
+      from { opacity: 0; transform: scale(1.05);}
+      to { opacity: 1; transform: scale(1);}
     }
+    @keyframes bgFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      animation: contentFadeIn 1.6s 0.5s forwards;
+      opacity: 0;
+    }
+    @keyframes contentFadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .hero h1 { font-size: 3.2rem;}
+    .hero p { font-size: 1.3rem; margin-bottom: 2rem;}
+    .btn-primary:hover { background-color: #004d99; }
 
-    .section-title {
+    /* Service banners */
+    .service-banner {
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      min-height: 340px;
+      margin-bottom: 2.5rem;
+      background: #1c2023;
+      box-shadow: 0 4px 32px rgba(52, 71, 103, 0.13);
+      color: #fff;
+      transition: box-shadow 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .service-banner-image {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 65%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: imgFadeIn 1.2s forwards;
+      animation-delay: 0.4s;
+      z-index: 1;
+    }
+    .service-banner-content {
+      position: relative;
+      z-index: 2;
+      max-width: 40%;
+      padding: 2.5rem 2rem;
+      text-align: left;
+    }
+    .service-banner-title {
       font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+    .service-banner-desc {
+      font-size: 1.08rem;
+      margin-bottom: 0.8rem;
+      color: #dbeafe;
+    }
+    @media (max-width: 991px) {
+      .service-banner-content { max-width: 60%; }
+      .service-banner-image { width: 50%; }
+    }
+    @media (max-width: 767px) {
+      .service-banner { flex-direction: column; align-items: flex-start; min-height: 260px; }
+      .service-banner-content { max-width: 100%; padding: 2rem 1rem; }
+      .service-banner-image { position: relative; width: 100%; height: 160px; min-height: 140px; }
     }
 
-    .testimonial {
-      font-style: italic;
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+    .footer {
+      background: #222; 
+      color: #ccc; 
+      padding: 1rem 0;
+    }
+    .footer a { color: #ddd; text-decoration: none; }
+    .img-placeholder {
+      background: #e3e6ea;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7a7a7a;
       font-size: 1rem;
+      border-radius: 10px;
+    }
+    .shadow-soft {
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.08);
+    }
+    .photographers-preview img {
+      height: 210px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.09);
+      background: #eee;
+    }
+    .testimonial-card {
+      border: none;
+      background: #f9f9fc;
+      border-radius: 16px;
+      box-shadow: 0 2px 12px rgba(52, 71, 103, 0.08);
+      padding: 2rem 1.3rem;
+      margin-bottom: 2rem;
     }
   </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-transparent position-absolute w-100 z-3 px-4 py-3">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold fs-4" href="#">SnapClick</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">CaptureMoments</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav gap-3">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav ms-auto gap-3">
         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="/photographers">Photographers</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Signup</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
+        {% if not session.get('user_id') %}
+        <li class="nav-item"><a class="nav-link fw-bold" href="{{ url_for('signup') }}">Signup</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+        {% else %}
+        <li class="nav-item"><span class="nav-link disabled">Hello, {{ session['username'] }}</span></li>
+        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Hero Section -->
 <section class="hero">
-  <div class="hero-overlay">
+  <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1500&q=80" class="hero-bg-image" alt="Wedding Banner"/>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
     <h1>Capture Life’s Best Moments</h1>
-    <p class="lead mt-3">Book top-rated photographers for your weddings, portraits, and events.</p>
-    <div class="mt-4">
-      <a href="#services" class="btn btn-primary btn-lg me-3">Explore Services</a>
-      <a href="#contact" class="btn btn-outline-light btn-lg">Get Started</a>
-    </div>
+    <p>Book top-rated photographers for weddings, portraits & events.</p>
+    <a href="/photographers" class="btn btn-lg btn-primary shadow">Find Your Photographer</a>
   </div>
 </section>
 
-<!-- Services Section -->
-<section id="services" class="py-5 bg-light">
+<!-- Modern Service Banners with fade-in images -->
+<section id="services" class="container py-5">
+  <h2 class="text-center mb-5">Our Services</h2>
+  <div class="service-banner mb-4">
+    <div class="service-banner-content">
+      <div class="service-banner-title">Wedding Photography</div>
+      <div class="service-banner-desc">creative vision and emotion.</div>
+      <a href="/photographers" class="btn btn-outline-light btn-sm mt-2">View Wedding Photographers</a>
+    </div>
+    <img src="https://plus.unsplash.com/premium_photo-1690148812608-9942834931a1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="service-banner-image" alt="Wedding Photography Banner"/>
+  </div>
+  <div class="service-banner mb-4">
+    <div class="service-banner-content">
+      <div class="service-banner-title">Portrait Sessions</div>
+      <div class="service-banner-desc"> perfect for families, professionals, and creatives.</div>
+      <a href="/photographers" class="btn btn-outline-light btn-sm mt-2">View Portrait Specialists</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1610122748280-d0ae76b10750?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="service-banner-image" alt="Portrait Sessions Banner"/>
+  </div>
+  <div class="service-banner mb-4">
+    <div class="service-banner-content">
+      <div class="service-banner-title">Event Coverage</div>
+      <div class="service-banner-desc"> we offer professional coverage that captures every moment.</div>
+      <a href="/photographers" class="btn btn-outline-light btn-sm mt-2">View Event Experts</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="service-banner-image" alt="Event Coverage Banner"/>
+  </div>
+</section>
+
+<section class="photographers-preview py-5 bg-white">
   <div class="container text-center">
-    <h2 class="section-title">Our Services</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="https://unsplash.it/400/250?image=1015" class="card-img-top" alt="Wedding">
-          <div class="card-body">
-            <h5 class="card-title">Wedding Photography</h5>
-            <p class="card-text">Elegant, timeless shots capturing the essence of your big day.</p>
-          </div>
-        </div>
+    <h2 class="mb-4">Meet Our Photographers</h2>
+    <div class="row g-4 justify-content-center">
+      {% for p in photographers %}
+      <div class="col-md-3 col-6">
+        <a href="/book/{{ p._id }}" class="text-decoration-none text-dark">
+          {% if p.image %}
+            <img loading="lazy" src="{{ p.image }}" alt="{{ p.name }}" class="img-fluid mb-2" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'img-placeholder\'>No Image</div>';">
+          {% else %}
+            <div class="img-placeholder mb-2">No Image</div>
+          {% endif %}
+          <h5>{{ p.name }}</h5>
+          <small class="text-muted">{{ p.specialty }}</small>
+        </a>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="https://unsplash.it/400/250?image=1025" class="card-img-top" alt="Portrait">
-          <div class="card-body">
-            <h5 class="card-title">Portrait Sessions</h5>
-            <p class="card-text">Professional studio or outdoor portraits crafted with care.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm">
-          <img src="https://unsplash.it/400/250?image=1065" class="card-img-top" alt="Event">
-          <div class="card-body">
-            <h5 class="card-title">Event Coverage</h5>
-            <p class="card-text">From birthdays to corporate events, we cover it all professionally.</p>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
+    <a href="/photographers" class="btn btn-outline-primary mt-4">See All</a>
   </div>
 </section>
 
-<!-- Testimonials -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2 class="section-title">What Our Clients Say</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <blockquote class="blockquote">
-          <p class="testimonial">"SnapClick made our anniversary shoot magical. The photos are breathtaking!"</p>
-          <footer class="blockquote-footer mt-2">Anjali & Rohit</footer>
-        </blockquote>
-      </div>
-      <div class="col-md-6">
-        <blockquote class="blockquote">
-          <p class="testimonial">"The professionalism and creativity was top-notch. Highly recommend!"</p>
-          <footer class="blockquote-footer mt-2">Deepak Kumar</footer>
-        </blockquote>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-4">
+<section id="testimonials" class="py-5">
   <div class="container">
-    <p class="mb-1">&copy; 2025 SnapClick. All rights reserved.</p>
+    <h2 class="text-center mb-5">Testimonials</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-5 mb-4">
+        <div class="testimonial-card">
+          <p class="mb-3 fs-5">&ldquo;capturemoments made our anniversary shoot magical. The photos are breathtaking!&rdquo;</p>
+          <p class="text-end fw-bold mb-0">alone &amp; sampath</p>
+        </div>
+      </div>
+      <div class="col-md-5 mb-4">
+        <div class="testimonial-card">
+          <p class="mb-3 fs-5">&ldquo;Professionalism and creativity were top‑notch. Highly recommend!&rdquo;</p>
+          <p class="text-end fw-bold mb-0">— Ekshika ujjeswarrao</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer text-center">
+  <div class="container">
+    <p class="mb-1">&copy; 2025 CaptureMoments. All rights reserved.</p>
     <small>Bringing your memories to life with passion.</small>
   </div>
 </footer>
