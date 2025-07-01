@@ -2,147 +2,239 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>capturemoments – Capture Life’s Best Moments</title>
+  <title>capturemoments – Capture Life's Best Moments</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <style>
     body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
-    /* Navbar Blur */
     .navbar {
-      padding-top: 0.7rem;
-      padding-bottom: 0.7rem;
-      background: rgba(255,255,255,0.75) !important;
+      padding: 0.3rem 0.6rem;
+      background: rgba(255,255,255,0.28) !important;
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.07);
-      transition: background 0.3s, backdrop-filter 0.3s;
+      box-shadow: 0 2px 12px rgba(52, 71, 103, 0.06);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
     }
     .navbar-brand {
-      font-size: 2rem;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
-    .nav-link.active, .nav-link.fw-bold {
-      color: #0d6efd !important;
+    .navbar-nav .nav-link {
+      font-size: 0.95rem;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
     }
 
-    /* Hero section animation */
-    .hero {
-      min-height: 100vh;
+    .hero-carousel {
       position: relative;
+      height: 100vh;
+      min-height: 500px;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      padding-top: 40px;
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(0deg, rgba(0,0,0,0.64), rgba(0,0,0,0.64));
-      pointer-events: none;
-      opacity: 0;
-      animation: bgFadeIn 2s forwards;
-      animation-delay: 0.3s;
+    .carousel-item {
+      height: 100vh;
+      min-height: 500px;
+      position: relative;
     }
-    .hero-bg-image {
+    .carousel-item img {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.9);
-      opacity: 0;
-      animation: imgFadeIn 1.4s forwards;
+      filter: brightness(1.1);
     }
-    @keyframes imgFadeIn {
-      from { opacity: 0; transform: scale(1.05);}
-      to { opacity: 1; transform: scale(1);}
-    }
-    @keyframes bgFadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,0.2), rgba(0,0,0,0.3));
+      z-index: 2;
+      pointer-events: none;
     }
     .hero-content {
-      position: relative;
-      z-index: 2;
+      position: absolute;
+      bottom: 80px;
+      right: 80px;
+      z-index: 3;
       color: #fff;
-      width: 100%;
-      max-width: 700px;
-      margin: 0 auto;
+      text-align: right;
+      width: auto;
+      max-width: 400px;
       animation: contentFadeIn 1.6s 0.5s forwards;
       opacity: 0;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.6);
     }
     @keyframes contentFadeIn {
       from { opacity: 0; transform: translateY(40px);}
       to { opacity: 1; transform: translateY(0);}
     }
-    .hero h1 { font-size: 3.2rem;}
-    .hero p { font-size: 1.3rem; margin-bottom: 2rem;}
+    .hero-content h1 { 
+      font-size: 2.2rem;
+      font-weight: 700; 
+      margin-bottom: 0.8rem;
+    }
+    .hero-content p { 
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
     .btn-primary:hover { background-color: #004d99; }
 
-    /* Service banners */
+    .carousel-control-prev,
+    .carousel-control-next {
+      width: 5%;
+      z-index: 4;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-size: 20px 20px;
+    }
+
+    /* Beautiful Service Banners */
+    #services {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    .services-header {
+      text-align: center;
+      padding-top: 2.5rem;
+      padding-bottom: 1.7rem;
+    }
+    .services-header h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ff7e5f 0%, #feb47b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      /* Not blue, but a warm orange-pink gradient */
+    }
+    .services-header p {
+      color: #8b5e3c;
+      font-size: 1.18rem;
+      margin-bottom: 0;
+      opacity: 0.87;
+      font-weight: 500;
+    }
     .service-banner {
       position: relative;
+      border-radius: 24px;
       overflow: hidden;
-      border-radius: 18px;
-      min-height: 340px;
-      margin-bottom: 2.5rem;
-      background: #1c2023;
-      box-shadow: 0 4px 32px rgba(52, 71, 103, 0.13);
-      color: #fff;
-      transition: box-shadow 0.3s;
       display: flex;
-      align-items: center;
-      justify-content: flex-start;
+      align-items: stretch;
+      min-height: 350px;
+      box-shadow: 0 8px 40px rgba(52, 71, 103, 0.15);
+      margin-bottom: 2.5rem;
+      background: #fff;
+      transition: box-shadow 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+    .service-banner:hover {
+      box-shadow: 0 16px 64px rgba(52, 71, 103, 0.22);
+      transform: translateY(-5px) scale(1.012);
     }
     .service-banner-image {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 65%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      animation: imgFadeIn 1.2s forwards;
-      animation-delay: 0.4s;
-      z-index: 1;
+      width: 52%;
+      min-width: 220px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(1.09) saturate(1.08);
+      transition: filter 0.3s;
+    }
+    .service-banner:hover .service-banner-image {
+      filter: brightness(1.18) saturate(1.16) blur(0.5px);
     }
     .service-banner-content {
-      position: relative;
-      z-index: 2;
-      max-width: 40%;
-      padding: 2.5rem 2rem;
-      text-align: left;
+      flex: 1 1 0%;
+      padding: 2.4rem 2.3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(120deg,rgba(255,126,95,0.08) 0%,rgba(254,180,123,0.12) 100%);
     }
     .service-banner-title {
       font-size: 2rem;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 0.5rem;
       letter-spacing: 0.01em;
+      background: linear-gradient(90deg,#ff7e5f 20%,#feb47b 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      /* Not blue, but a warm orange-pink gradient */
     }
     .service-banner-desc {
-      font-size: 1.08rem;
-      margin-bottom: 0.8rem;
-      color: #dbeafe;
+      font-size: 1.13rem;
+      margin-bottom: 1.1rem;
+      color: #6a4a2b;
+      font-weight: 500;
+      opacity: 0.97;
+    }
+    .service-banner-features {
+      margin-bottom: 1.2rem;
+      padding-left: 1.2em;
+      color: #a86e39;
+    }
+    .service-banner-features li {
+      margin-bottom: 0.4em;
+      font-size: 1.01rem;
+      position: relative;
+      padding-left: 1.2em;
+    }
+    .service-banner-features li:before {
+      content: "\f26e";
+      font-family: "Bootstrap-icons";
+      color: #ff7e5f;
+      position: absolute;
+      left: 0;
+      top: 0.07em;
+      font-size: 0.95em;
+    }
+    .service-banner .btn {
+      border-radius: 28px;
+      padding: 0.45rem 1.2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 0.3rem;
+      background: linear-gradient(90deg,#ff7e5f 60%, #feb47b 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 2px 8px rgba(52, 71, 103, 0.10);
+      transition: background 0.22s, box-shadow 0.22s;
+    }
+    .service-banner .btn:hover {
+      background: linear-gradient(90deg, #feb47b 40%, #ff7e5f 100%);
+      box-shadow: 0 6px 24px rgba(254,180,123,0.14);
+      color: #fff;
     }
     @media (max-width: 991px) {
-      .service-banner-content { max-width: 60%; }
-      .service-banner-image { width: 50%; }
+      .service-banner-content { padding: 2.2rem 1.1rem; }
+      .service-banner-image { width: 50%; min-width: 140px; }
+      .hero-content { bottom: 60px; right: 40px; max-width: 300px;}
+      .hero-content h1 { font-size: 1.8rem; }
     }
     @media (max-width: 767px) {
-      .service-banner { flex-direction: column; align-items: flex-start; min-height: 260px; }
-      .service-banner-content { max-width: 100%; padding: 2rem 1rem; }
-      .service-banner-image { position: relative; width: 100%; height: 160px; min-height: 140px; }
+      .service-banner { 
+        flex-direction: column; 
+        min-height: 0; 
+        border-radius: 14px;
+      }
+      .service-banner-content { padding: 1.5rem 1rem; }
+      .service-banner-image { width: 100%; height: 180px; min-width: unset; border-radius: 0; }
+      .hero-content { bottom: 40px; right: 20px; left: 20px; max-width: none; text-align: center;}
+      .hero-content h1 { font-size: 1.6rem; }
+      .hero-content p { font-size: 0.9rem; }
     }
 
-    .card-hover {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card-hover:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-    }
     .footer {
       background: #222; 
       color: #ccc; 
@@ -181,91 +273,212 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="#">CaptureMoments</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarMenu">
-      <ul class="navbar-nav ms-auto gap-3">
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="/photographers">Photographers</a></li>
-        <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-        {% if not session.get('user_id') %}
-        <li class="nav-item"><a class="nav-link fw-bold" href="{{ url_for('signup') }}">Signup</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
-        {% else %}
-        <li class="nav-item"><span class="nav-link disabled">Hello, {{ session['username'] }}</span></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
-        {% endif %}
-      </ul>
+  {% include 'navbar.html' %}
+<!-- Hero Carousel Section -->
+<section class="hero-carousel">
+  <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://images.unsplash.com/photo-1587271407850-8d438ca9fdf2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Wedding Photography"/>
+      </div>
+      <div class="carousel-item">
+        <img src="https://plus.unsplash.com/premium_photo-1726862620845-00583f71a385?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Family Portrait"/>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1549451371-64aa98a6f660?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Event Photography"/>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1640341284486-a26073cff225?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Birthday Party"/>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1430990480609-2bf7c02a6b1a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Corporate Events"/>
+      </div>
     </div>
-  </div>
-</nav>
-
-<section class="hero">
-  <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1500&q=80" class="hero-bg-image" alt="Wedding Banner"/>
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <h1>Capture Life’s Best Moments</h1>
-    <p>Book top-rated photographers for weddings, portraits & events.</p>
-    <a href="/photographers" class="btn btn-lg btn-primary shadow">Find Your Photographer</a>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Capture Life's Best Moments</h1>
+      <p>Book top-rated photographers for weddings, portraits & events.</p>
+      <a href="/photographers" class="btn btn-primary shadow">Find Your Photographer</a>
+    </div>
   </div>
 </section>
 
-<!-- Modern Service Banners with fade-in images -->
-<section id="services" class="container py-5">
-  <h2 class="text-center mb-5">Our Services</h2>
+<section id="services" class="container">
+  <div class="services-header">
+    <h2>Our Photography Services</h2>
+    <p>Exceptional experiences for every occasion. Explore our professional packages.</p>
+  </div>
   <div class="service-banner mb-4">
     <div class="service-banner-content">
       <div class="service-banner-title">Wedding Photography</div>
-      <div class="service-banner-desc">creative vision and emotion.</div>
-      <a href="/photographers" class="btn btn-outline-light btn-sm mt-2">View Wedding Photographers</a>
+      <div class="service-banner-desc">Creative vision and emotion for your big day.</div>
+      <ul class="service-banner-features">
+        <li>Full-day coverage (8-10 hours)</li>
+        <li>2 professional photographers</li>
+        <li>500+ edited high-res images</li>
+        <li>Online gallery with download</li>
+        <li>Engagement session included</li>
+      </ul>
+      <a href="/photographers" class="btn btn-primary">View Wedding Photographers</a>
     </div>
-    <img src="https://plus.unsplash.com/premium_photo-1690148812608-9942834931a1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="service-banner-image" alt="Wedding Photography Banner"/>
+    <div class="service-banner-image" style="background-image:url('https://plus.unsplash.com/premium_photo-1690148812608-9942834931a1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
   </div>
   <div class="service-banner mb-4">
     <div class="service-banner-content">
       <div class="service-banner-title">Portrait Sessions</div>
-      <div class="service-banner-desc"> perfect for families, professionals, and creatives.</div>
-      <a href="/photographers" class="btn btn-outline-light btn-sm mt-2">View Portrait Specialists</a>
+      <div class="service-banner-desc">Perfect for families, professionals, and creatives.</div>
+      <ul class="service-banner-features">
+        <li>1-2 hour session</li>
+        <li>1 professional photographer</li>
+        <li>50+ edited high-res images</li>
+        <li>Choice of location</li>
+        <li>Multiple outfit changes</li>
+      </ul>
+      <a href="/photographers" class="btn btn-primary">View Portrait Specialists</a>
     </div>
-    <img src="https://images.unsplash.com/photo-1610122748280-d0ae76b10750?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="service-banner-image" alt="Portrait Sessions Banner"/>
+    <div class="service-banner-image" style="background-image:url('https://images.unsplash.com/photo-1610122748280-d0ae76b10750?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
   </div>
   <div class="service-banner mb-4">
     <div class="service-banner-content">
       <div class="service-banner-title">Event Coverage</div>
-      <div class="service-banner-desc"> we offer professional coverage that captures every moment.</div>
-      <a href="/photographers" class="btn btn-outline-light btn-sm mt-2">View Event Experts</a>
+      <div class="service-banner-desc">Professional coverage that captures every moment.</div>
+      <ul class="service-banner-features">
+        <li>Half-day or full-day sessions</li>
+        <li>Studio or on location</li>
+        <li>Professional lighting setup</li>
+        <li>100+ edited high-res images</li>
+        <li>Fast turnaround</li>
+      </ul>
+      <a href="/photographers" class="btn btn-primary">View Event Experts</a>
     </div>
-    <img src="https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="service-banner-image" alt="Event Coverage Banner"/>
+    <div class="service-banner-image" style="background-image:url('https://images.unsplash.com/photo-1556125574-d7f27ec36a06?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');"></div>
   </div>
 </section>
-
 <section class="photographers-preview py-5 bg-white">
+  <style>
+    /* Meet Our Photographers - Card Hover Animation and Gradient Color */
+    .photographers-preview .photographer-card {
+      border-radius: 18px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 4px 24px rgba(52, 71, 103, 0.11);
+      transition: box-shadow 0.28s, transform 0.28s;
+      text-align: center;
+      position: relative;
+      padding: 2.2rem 1.2rem 1.6rem 1.2rem;
+      margin-bottom: 2.1rem;
+      cursor: pointer;
+      min-height: 320px;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .photographers-preview .photographer-card:hover {
+      box-shadow: 0 12px 52px 0px rgba(255,126,95,0.18),0 4px 16px rgba(52,71,103,0.13);
+      transform: translateY(-10px) scale(1.045);
+    }
+    .photographers-preview .photographer-card h5 {
+      background: linear-gradient(90deg, #ff7e5f 0%, #feb47b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      font-size: 1.28rem;
+      margin-bottom: 0.18rem;
+      margin-top: 0.5rem;
+      transition: background 0.22s, color 0.22s;
+    }
+    .photographers-preview .photographer-card:hover h5 {
+      background: linear-gradient(90deg, #feb47b 0%, #ff7e5f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .photographers-preview .photographer-card small {
+      color: #a86e39;
+      font-weight: 500;
+      font-size: 1.04rem;
+    }
+    .photographers-preview img {
+      height: 210px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.09);
+      background: #eee;
+      margin-bottom: 1.2rem;
+      width: 100%;
+      max-width: 260px;
+    }
+    .photographers-preview .img-placeholder {
+      height: 210px;
+      width: 100%;
+      max-width: 260px;
+      margin: 0 auto 1.2rem auto;
+    }
+    @media (max-width: 991px) {
+      .photographers-preview img, .photographers-preview .img-placeholder { height: 150px; max-width: 180px;}
+      .photographers-preview .photographer-card { min-height: 220px; max-width: 94vw; padding: 1.3rem 0.3rem 1.1rem 0.3rem;}
+    }
+    @media (max-width: 576px) {
+      .photographers-preview img, .photographers-preview .img-placeholder { height: 90px; max-width: 90vw;}
+      .photographers-preview .photographer-card { min-height: 140px; padding: 0.8rem 0.1rem 0.7rem 0.1rem;}
+    }
+    /* See All Button - Match "Our Services" gradient style */
+    .photographers-preview .see-all-btn {
+      border-radius: 28px;
+      padding: 0.55rem 1.5rem;
+      font-weight: 600;
+      font-size: 1.09rem;
+      margin-top: 0.7rem;
+      background: linear-gradient(90deg,#ff7e5f 60%, #feb47b 100%);
+      color: #fff !important;
+      border: none;
+      box-shadow: 0 2px 8px rgba(52, 71, 103, 0.10);
+      transition: background 0.22s, box-shadow 0.22s;
+      display: inline-block;
+    }
+    .photographers-preview .see-all-btn:hover {
+      background: linear-gradient(90deg, #feb47b 40%, #ff7e5f 100%);
+      box-shadow: 0 6px 24px rgba(254,180,123,0.14);
+      color: #fff !important;
+      text-decoration: none;
+    }
+  </style>
   <div class="container text-center">
     <h2 class="mb-4">Meet Our Photographers</h2>
     <div class="row g-4 justify-content-center">
-      {% for p in photographers %}
-      <div class="col-md-3 col-6">
+      {% for p in photographers[:3] %}
+
+      <div class="col-lg-4 col-md-6 col-12">
         <a href="/book/{{ p._id }}" class="text-decoration-none text-dark">
-          {% if p.image %}
-            <img loading="lazy" src="{{ p.image }}" alt="{{ p.name }}" class="img-fluid mb-2" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'img-placeholder\'>No Image</div>';">
-          {% else %}
-            <div class="img-placeholder mb-2">No Image</div>
-          {% endif %}
-          <h5>{{ p.name }}</h5>
-          <small class="text-muted">{{ p.specialty }}</small>
+          <div class="photographer-card">
+            {% if p.image %}
+              <img loading="lazy" src="{{ p.image }}" alt="{{ p.name }}" class="img-fluid mb-2" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'img-placeholder\'>No Image</div>';">
+            {% else %}
+              <div class="img-placeholder mb-2">No Image</div>
+            {% endif %}
+            <h5>{{ p.name }}</h5>
+            <small>{{ p.specialty }}</small>
+          </div>
         </a>
       </div>
       {% endfor %}
     </div>
-    <a href="/photographers" class="btn btn-outline-primary mt-4">See All</a>
+    <a href="/photographers" class="see-all-btn mt-4">See All</a>
   </div>
 </section>
-
 <section id="testimonials" class="py-5">
   <div class="container">
     <h2 class="text-center mb-5">Testimonials</h2>
@@ -294,5 +507,35 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Smooth scroll to services when clicking navbar link
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('a.nav-link[href="#services"]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector('#services');
+        if(target){
+          window.scrollTo({
+            top: target.offsetTop - 40,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Fade-in for service banners when they enter the viewport
+    const banners = document.querySelectorAll('.service-banner');
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('fade-in-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    banners.forEach(banner => observer.observe(banner));
+  });
+</script>
 </body>
 </html>

@@ -1,147 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <title>Book Photographer – CaptureMoments</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
   <style>
-    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background: #fdfdfd;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
     .navbar {
-      padding-top: 0.7rem;
-      padding-bottom: 0.7rem;
-      background: rgba(255,255,255,0.75) !important;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.07);
-      transition: background 0.3s, backdrop-filter 0.3s;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
     }
-    .navbar-brand {
-      font-size: 2rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    .booking-form-card {
+
+    .booking-container {
+      max-width: 1100px;
+      margin: 100px auto 40px;
+      padding: 2rem;
       background: #fff;
-      max-width: 520px;
-      margin: 120px auto 0 auto;
-      padding: 2.5rem 2rem;
-      border-radius: 20px;
-      box-shadow: 0 2px 18px rgba(52, 71, 103, 0.13);
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
     }
-    .booking-form-card h2 {
-      font-weight: 700;
-      margin-bottom: 1.4rem;
-      color: #23272b;
-    }
-    .form-label { font-weight: 500; }
-    .form-control:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 0 0.18rem rgba(13,110,253,0.13);
-    }
-    .btn-primary {
-      border-radius: 30px;
-      padding: 0.6rem 2.2rem;
-      font-weight: 600;
-      font-size: 1.08rem;
-    }
-    .photographer-preview {
-      margin-bottom: 2rem;
+
+    .photographer-card {
+      background: #fff5f0;
+      padding: 1.5rem;
+      border-radius: 1rem;
       text-align: center;
     }
-    .photographer-preview img {
-      width: 80px;
-      height: 80px;
+
+    .photographer-card img {
+      width: 120px;
+      height: 120px;
       object-fit: cover;
       border-radius: 50%;
-      box-shadow: 0 2px 8px rgba(52, 71, 103, 0.10);
-      margin-bottom: 0.65rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
-    .photographer-preview h5 { margin-bottom: 0.2rem; font-weight: 600; }
-    .photographer-preview small { color: #0d6efd; }
-    @media (max-width: 576px){
-      .booking-form-card { padding: 1.2rem 0.2rem; }
+
+    .photographer-card h5 {
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    .input-label {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .input-group-icon {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      background: #fff;
+    }
+
+    .input-group-icon i {
+      color: #fd7e14;
+      font-size: 1.2rem;
+      margin-right: 0.6rem;
+    }
+
+    .input-group-icon input,
+    .input-group-icon select,
+    .input-group-icon textarea {
+      border: none;
+      outline: none;
+      flex: 1;
+      background: transparent;
+      font-size: 1rem;
+    }
+
+    .input-group-icon input::placeholder,
+    .input-group-icon textarea::placeholder {
+      color: #aaa;
+    }
+
+    .btn-orange {
+      background-color: #fd7e14;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.3rem;
+      font-size: 1.05rem;
+      border-radius: 30px;
+      transition: background 0.3s;
+    }
+
+    .btn-orange:hover {
+      background-color: #e96d0f;
+    }
+
+    footer {
+      background: #222;
+      color: #ccc;
+      padding: 1rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .booking-container {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">CaptureMoments</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarMenu">
-      <ul class="navbar-nav ms-auto gap-3">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('photographers') }}">Photographers</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}#testimonials">Testimonials</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-        {% if not session.get('user_id') %}
-        <li class="nav-item"><a class="nav-link fw-bold" href="{{ url_for('signup') }}">Signup</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
-        {% else %}
-        <li class="nav-item"><span class="nav-link disabled">Hello, {{ session['username'] }}</span></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<div class="booking-form-card shadow">
-  {% if photographer %}
-  <div class="photographer-preview">
-    {% if photographer.image %}
-      <img src="{{ photographer.image }}" alt="{{ photographer.name }}">
-    {% else %}
-      <div style="width:80px;height:80px;border-radius:50%;background:#e3e6ea;display:inline-flex;align-items:center;justify-content:center;color:#888;">No Image</div>
+<!-- ✅ Navbar -->
+{% include 'navbar.html' %}
+
+<!-- ✅ Booking Form -->
+<div class="container booking-container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
     {% endif %}
-    <h5>{{ photographer.name }}</h5>
-    <small>{{ photographer.specialty }}</small>
+  {% endwith %}
+
+  <div class="row g-4">
+    <!-- Photographer -->
+    <div class="col-md-4">
+      <div class="photographer-card">
+        {% if photographer.image %}
+          <img src="{{ photographer.image }}" alt="{{ photographer.name }}">
+        {% else %}
+          <div class="placeholder-img"><i class="bi bi-camera fs-1 text-muted"></i></div>
+        {% endif %}
+        <h5>{{ photographer.name }}</h5>
+        <div class="text-muted">{{ photographer.specialty }}</div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="col-md-8">
+      <h4 class="mb-4">Book This Photographer</h4>
+      <form method="post" action="{{ url_for('book', photographer_id=photographer._id) }}" id="bookingForm">
+
+        <div class="mb-3">
+          <label class="input-label">Type of Event</label>
+          <div class="input-group-icon">
+            <i class="bi bi-star-fill"></i>
+            <select name="event_type" required>
+              <option value="">Choose...</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Corporate">Corporate</option>
+              <option value="Portrait">Portrait</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="input-label">Start Date</label>
+          <div class="input-group-icon">
+            <i class="bi bi-calendar-event"></i>
+            <input type="text" id="start_date" name="start_date" placeholder="Select start date" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="input-label">End Date</label>
+          <div class="input-group-icon">
+            <i class="bi bi-calendar2-range-fill"></i>
+            <input type="text" id="end_date" name="end_date" placeholder="Select end date" required>
+          </div>
+          <div id="date-feedback" class="form-text text-danger mt-1"></div>
+        </div>
+
+        <div class="mb-3">
+          <label class="input-label">Event Location</label>
+          <div class="input-group-icon">
+            <i class="bi bi-geo-alt-fill"></i>
+            <input type="text" name="location" placeholder="Where is the event?" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="input-label">Additional Notes</label>
+          <div class="input-group-icon">
+            <i class="bi bi-chat-left-text-fill"></i>
+            <textarea name="notes" rows="3" placeholder="Any special instructions?"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-orange w-100">
+          <i class="bi bi-calendar2-check me-1"></i> Book Now
+        </button>
+      </form>
+    </div>
   </div>
-  {% endif %}
-  <h2>Book This Photographer</h2>
-  <form method="post" action="{{ url_for('book', photographer_id=photographer._id) }}">
-    <div class="mb-3">
-      <label for="event_type" class="form-label">Type of Event</label>
-      <select class="form-select" id="event_type" name="event_type" required>
-        <option value="">Choose...</option>
-        <option value="Wedding">Wedding</option>
-        <option value="Portrait">Portrait</option>
-        <option value="Birthday">Birthday</option>
-        <option value="Corporate">Corporate</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="date" class="form-label">Available Date</label>
-      <select class="form-select" id="date" name="date" required>
-        <option value="">Select a date...</option>
-        {% for d in photographer.availability %}
-        <option value="{{ d }}">{{ d }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="location" class="form-label">Location</label>
-      <input type="text" class="form-control" id="location" name="location" placeholder="Enter event location" required>
-    </div>
-    <div class="mb-3">
-      <label for="notes" class="form-label">Additional Notes</label>
-      <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Anything else? (optional)"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary w-100">Book Now</button>
-  </form>
 </div>
 
-<footer class="footer text-center mt-5">
+<!-- ✅ Footer -->
+<footer class="text-center mt-5">
   <div class="container">
     <p class="mb-1">&copy; 2025 CaptureMoments. All rights reserved.</p>
     <small>Bringing your memories to life with passion.</small>
   </div>
 </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const startPicker = flatpickr("#start_date", {
+      dateFormat: "Y-m-d",
+      minDate: "today",
+      onChange: function (selectedDates, dateStr) {
+        if (selectedDates[0]) {
+          endPicker.set('minDate', dateStr);
+        }
+        validateDates();
+      }
+    });
+
+    const endPicker = flatpickr("#end_date", {
+      dateFormat: "Y-m-d",
+      minDate: "today",
+      onChange: function () {
+        validateDates();
+      }
+    });
+
+    function validateDates() {
+      const start = startPicker.selectedDates[0];
+      const end = endPicker.selectedDates[0];
+      const feedback = document.getElementById('date-feedback');
+
+      if (start && end) {
+        if (end < start) {
+          feedback.textContent = "End date must be after start date.";
+          return false;
+        }
+        const diff = (end - start) / (1000 * 60 * 60 * 24);
+        if (diff > 14) {
+          feedback.textContent = "Booking duration cannot exceed 14 days.";
+          return false;
+        }
+        feedback.textContent = "";
+      }
+      return true;
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function (e) {
+      if (!validateDates()) {
+        e.preventDefault();
+      }
+    });
+  });
+</script>
 </body>
 </html>

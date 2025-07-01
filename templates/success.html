@@ -6,102 +6,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <style>
-    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+  <style>html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  flex: 1;
+  
+     background: #fff7f2;
+      font-family: 'Segoe UI', sans-serif;
+}
+
+main {
+  flex: 1;
+}
+
+    
+
     .navbar {
       padding-top: 0.7rem;
       padding-bottom: 0.7rem;
-      background: rgba(255,255,255,0.75) !important;
+      background: rgba(255,255,255,0.8) !important;
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
       box-shadow: 0 2px 16px rgba(52, 71, 103, 0.07);
-      transition: background 0.3s, backdrop-filter 0.3s;
     }
+
     .navbar-brand {
       font-size: 2rem;
       font-weight: bold;
+      color: #fd7e14 !important;
       letter-spacing: 1px;
     }
+
     .success-card {
       background: #fff;
       max-width: 480px;
-      margin: 120px auto 0 auto;
+      margin: 120px auto 0;
       padding: 2.5rem 2rem;
       border-radius: 20px;
       box-shadow: 0 2px 18px rgba(52, 71, 103, 0.13);
       text-align: center;
     }
+
     .success-icon {
-      color: #28a745;
+      color: #fd7e14;
       font-size: 3.6rem;
       margin-bottom: 1.2rem;
-      display: inline-block;
     }
+
     .success-title {
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 0.6rem;
       color: #23272b;
     }
+
     .success-desc {
-      font-size: 1.08rem;
+      font-size: 1.05rem;
       color: #555;
       margin-bottom: 1.5rem;
     }
-    .btn-primary {
+
+    .btn-orange {
+      background-color: #fd7e14;
+      border: none;
+      color: white;
       border-radius: 30px;
-      padding: 0.55rem 2.2rem;
+      padding: 0.55rem 2rem;
       font-weight: 600;
-      font-size: 1.08rem;
+      font-size: 1.05rem;
+      transition: background 0.3s ease;
     }
+
+    .btn-orange:hover {
+      background-color: #e86c0d;
+      color: white;
+    }
+
+    .btn-outline-orange {
+      border: 2px solid #fd7e14;
+      color: #fd7e14;
+      background-color: transparent;
+      border-radius: 30px;
+      padding: 0.55rem 2rem;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-orange:hover {
+      background-color: #fd7e14;
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #222;
+      color: #ccc;
+      padding: 1rem 0;
+    }
+
+    footer a {
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 576px){
-      .success-card { padding: 1.2rem 0.2rem; }
+      .success-card {
+        padding: 1.5rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light fixed-top">
-  <div class="container">
-    <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">CaptureMoments</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarMenu">
-      <ul class="navbar-nav ms-auto gap-3">
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('photographers') }}">Photographers</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}#testimonials">Testimonials</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact</a></li>
-        {% if not session.get('user_id') %}
-        <li class="nav-item"><a class="nav-link fw-bold" href="{{ url_for('signup') }}">Signup</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
-        {% else %}
-        <li class="nav-item"><span class="nav-link disabled">Hello, {{ session['username'] }}</span></li>
-        <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
-        {% endif %}
-      </ul>
-    </div>
-  </div>
-</nav>
 
-<div class="success-card shadow">
+
+  {% include 'navbar.html' %}
+
+<!-- Success Card -->
+<main class="d-flex align-items-center justify-content-center flex-column">
+  <div class="success-card shadow">
   <span class="success-icon"><i class="bi bi-check-circle-fill"></i></span>
   <div class="success-title">Booking Confirmed!</div>
   <div class="success-desc">
     Thank you for booking with CaptureMoments.<br>
-    Your photographer will contact you soon. <br>
+    Your photographer will contact you soon.<br>
     We look forward to capturing your special moments!
   </div>
-  <a href="{{ url_for('index') }}" class="btn btn-primary mt-2">Back to Home</a>
-  <a href="{{ url_for('photographers') }}" class="btn btn-outline-primary mt-2 ms-2">Book Another</a>
+  <a href="{{ url_for('index') }}" class="btn btn-orange mt-2">
+    <i class="bi bi-house-door-fill me-1"></i> Back to Home
+  </a>
+  <a href="{{ url_for('photographers') }}" class="btn btn-outline-orange mt-2 ms-2">
+    <i class="bi bi-camera-fill me-1"></i> Book Another
+  </a>
 </div>
 
-<footer class="footer text-center mt-5">
+<!-- Footer -->
+<footer class="footer text-center">
   <div class="container">
     <p class="mb-1">&copy; 2025 CaptureMoments. All rights reserved.</p>
     <small>Bringing your memories to life with passion.</small>
   </div>
 </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

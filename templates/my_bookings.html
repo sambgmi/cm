@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Bookings – CaptureMoments</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <style>
+    html, body {
+      height: 100%;
+      background: #fff7f0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .booking-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(52, 71, 103, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 1.8rem;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .booking-card:hover {
+      box-shadow: 0 8px 24px rgba(253, 126, 20, 0.15);
+    }
+
+    .booking-card h5 {
+      font-weight: 600;
+      color: #fd7e14;
+    }
+
+    .booking-meta {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .btn-orange {
+      background-color: #fd7e14;
+      border: none;
+      color: white;
+      border-radius: 30px;
+      padding: 0.4rem 1rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background: #222;
+      color: #ccc;
+      padding: 1rem 0;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  {% include 'navbar.html' %}
+
+  <main class="flex-grow-1">
+    <div class="container mt-4">
+      <h2 class="mb-4 text-center">My Bookings</h2>
+
+      {% if bookings %}
+        {% for booking in bookings %}
+          <div class="booking-card">
+            <div class="d-flex justify-content-between align-items-start flex-wrap">
+              <div>
+                <h5>{{ booking.photographer.name }}</h5>
+                <div class="booking-meta mb-1">
+                  <i class="bi bi-calendar-event me-1"></i>
+                  {{ booking.start_date | format_date }} to {{ booking.end_date | format_date }}
+                </div>
+                <div class="booking-meta mb-1">
+                  <i class="bi bi-geo-alt-fill me-1"></i>
+                  {{ booking.location }}
+                </div>
+                <div class="booking-meta mb-1">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Event Type: {{ booking.event_type }}
+                </div>
+                {% if booking.notes %}
+                  <div class="booking-meta mb-1"><strong>Notes:</strong> {{ booking.notes }}</div>
+                {% endif %}
+                <span class="badge bg-success mt-2">Status: {{ booking.status }}</span>
+              </div>
+              {% if booking.photographer.image %}
+                <img src="{{ booking.photographer.image }}" alt="Photographer" class="rounded ms-3 mt-3 mt-md-0" width="100" height="100" style="object-fit:cover;">
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-info text-center">You have no bookings yet.</div>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-1">&copy; 2025 CaptureMoments. All rights reserved.</p>
+      <small>Bringing your memories to life with passion.</small>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
